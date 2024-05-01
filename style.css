@@ -23,7 +23,10 @@ body {
   }
   
   .navbar-logo img {
-    width: 100px; /* Adjust as needed */
+    height: 200px;
+    position: relative;
+    top: 64px;
+    left: 40px;
   }
   
   ul {
@@ -37,6 +40,8 @@ body {
   ul li {
     display: inline;
     margin-right: 20px;
+    position: relative;
+    left: 100px;
   }
   
   ul li:last-child {
@@ -51,4 +56,7 @@ body {
   main {
     padding: 20px;
   }
-  
+
+.navtext {
+  font-size: 30px;
+}
