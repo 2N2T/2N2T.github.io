@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Minecraft;
+  src: url(F77MinecraftRegular-0VYv.ttf);
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -39,9 +44,9 @@ body {
   
   ul li {
     display: inline;
-    margin-right: 20px;
+    margin-right: 100px;
     position: relative;
-    left: 100px;
+    left: 180px;
   }
   
   ul li:last-child {
@@ -59,4 +64,5 @@ body {
 
 .navtext {
   font-size: 30px;
+  font-family: Minecraft;
 }
