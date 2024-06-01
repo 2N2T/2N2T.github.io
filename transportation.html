@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="2n2tlogo.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <title>2N2T Official Website</title>
 </head>
 <body>
@@ -22,7 +24,105 @@
         </div>
     </header>
       <main>
-        
+        <center>
+          <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'London')">Metro</button>
+            <button class="tablinks" onclick="openCity(event, 'Paris')">Taxi</button>
+            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Railway</button>
+          </div>
+        </center>
+
+        <div id="London" class="tabcontent">
+          <br>
+          <br>
+          <iframe src="maps/metroMap.html" frameborder="0" class="metroMap"></iframe>
+        </div>
+      
+        <div id="Paris" class="tabcontent">
+          <br>
+          <br>
+          <iframe src="maps/taxiMap.html" frameborder="0" class="taxiMap"></iframe>
+        </div>
+
+        <div id="Tokyo" class="tabcontent">
+          <br>
+          <br>
+          <iframe src="maps/rwMap.html" frameborder="0" class="rwMap"></iframe>
+        </div>
       </main>
+
+      <style>
+        body {font-family: Arial;}
+        
+        /* Style the tab */
+        .tab {
+          overflow: hidden;
+          border: 1px solid #ccc;
+          background-color: #f1f1f1;
+          border-radius: 10px;
+          width: 230px;
+        }
+        
+        /* Style the buttons inside the tab */
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+        
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+          background-color: #ddd;
+        }
+        
+        /* Create an active/current tablink class */
+        .tab button.active {
+          background-color: #ccc;
+        }
+        
+        .tabcontent {
+          display: none;
+        }
+
+        .metroMap {
+          width: 1859px;
+          height: 679px;
+          border-radius: 40px;
+        }
+
+        .taxiMap {
+          width: 1859px;
+          height: 679px;
+          border-radius: 40px;
+        }
+
+        .rwMap {
+          width: 1859px;
+          height: 679px;
+          border-radius: 40px;
+        }
+
+      </style>
+
+      <script>
+      function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      </script>
 </body>
 </html>

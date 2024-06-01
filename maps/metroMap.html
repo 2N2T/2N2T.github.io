@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metro Map iframe</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 660px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    var map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -1.7,
+        maxBoundsViscosity: 1.0
+    });
+
+    var bounds = [[0,0], [3600,6400]];
+    var image = L.imageOverlay('2n2tmap.png', bounds, { attribution: '2N2T | Last updated in 30/05/2024' }).addTo(map);
+
+    map.fitBounds(bounds);
+    map.setMaxBounds(bounds);
+</script>
+
+</body>
+</html>
