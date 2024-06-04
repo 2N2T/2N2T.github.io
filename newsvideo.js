@@ -1,6 +1,6 @@
   // Replace 'YOUR_API_KEY' and 'PLAYLIST_ID' with your actual API key and playlist ID
   const apiKey = 'AIzaSyCaloVzVDnSmcwjtgy5fefBz7F60ubdL14';
-  const playlistId = 'PLXOKCNa-yVR03hHZbc5nw-HVbrp3bcg5y';
+  const playlistId = 'PLHd-8ma4m21gAQsyuU041u8Iv_aOJJLHe';
 
   // Fetch latest videos from the playlist
   fetch(`https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${playlistId}&part=snippet,contentDetails&order=date&maxResults=10`)
