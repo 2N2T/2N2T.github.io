@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="2n2tlogo.png">
+    <script src="newsvideo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@widgetbot/html-embed"></script>
     <title>2N2T Official Website</title>
 </head>
 <body>
@@ -14,7 +16,6 @@
             <li><a href="index.html" class="navtext">Home</a></li>
             <li><a href="transportation.html" class="navtext">Transportation</a></li>
             <li><a href="news.html" class="navtext">News</a></li>
-            <!-- <li><a href="#">Contact</a></li> -->
           </ul>
         </nav>
         <div class="navbar-logo">
@@ -22,7 +23,95 @@
         </div>
     </header>
       <main>
-        <!-- Your main content here -->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        <div id="videos-container"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="discordDiv">
+          <h1 class="discordText">You can also be updated on Discord!</h1>
+          <widgetbot server="1147102823847305306" channel="1247496338547933225" width="97%" height="640" class="discordWidget"></widgetbot>
+        </div>
+        <br>
+        <br>
+        <br>
       </main>
+    
+      <style>
+        body {
+        overflow-x: hidden;
+        }
+        @font-face {
+        font-family: Discord;
+        src: url(ABCGintoNord-Black-Trial-BF651b7b7719b0f.otf);
+        }
+        #videos-container {
+          display: flex; 
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          width: 100%;
+          height: 1000%;
+          max-height: 1000px;
+          margin: 1 auto;
+        }
+         #videos-container div {
+          flex: 0 0 auto;
+          margin-right: 10px;
+        }
+        .videoTitle {
+          position: relative;
+          width: 31ch;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          direction: rtl;
+          unicode-bidi: bidi-override;
+          left: 20px;
+        }
+        .vid {
+          position: relative;
+          width:420px;
+          height:240px;
+          left: 15px;
+          border-radius: 25px;
+        }
+        #videoDiv {
+          width: 450px;
+          border-radius: 25px;
+          background-color: rgba(255, 255, 255, 20%);
+          outline: 2px solid rgb(255, 255, 255, 35%);
+          box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        .discordWidget {
+          position: relative;
+          left: 1.5%;
+          top: 3%;
+        }
+        .discordDiv {
+          background-color: rgba(60,69,163, 50%);
+          border-radius: 25px;
+          height: 800px;
+          outline: 2px solid rgb(60,69,163, 60%);
+          box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        .discordText {
+          position: relative;
+          color: white;
+          font-size: 55px;
+          top: 3%;
+          left: 2%;
+          font-family: Discord;
+        }
+      </style>
 </body>
 </html>

@@ -4,6 +4,10 @@
 }
 
 body {
+  overflow-x: hidden;
+}
+
+body {
   margin: 0;
   padding: 0;
 }
@@ -84,7 +88,7 @@ body {
 .aboutText {
   position: relative;
   background-color: transparent;
-  height: 600px;
+  height: 930px;
   top: 50px;
   border-radius: 25px;
   background-color: rgba(255, 255, 255, 20%);
@@ -96,8 +100,20 @@ body {
 .logohorizontal {
   position: relative;
   top: 140px;
-  left: 28%;
   width: 700px;
   height: 200px;
   z-index: 2;
+}
+
+.textt {
+  position: relative;
+  top: 14%;
+  left: 2%;
+}
+
+.fakeNavText {
+  position: relative;
+  left: 2%;
+  font-size: 40px;
+  font-family: Minecraft;
 }
