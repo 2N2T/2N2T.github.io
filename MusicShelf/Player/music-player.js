@@ -9,20 +9,26 @@ const vinylSpin = document.querySelector('#vinyl-spin');
 
 const audio = document.createElement("audio");
 
+// Dynamic runtime variables
 let songs = [];
 let currentSongIndex = 0;
 let albumArtistName = ""; 
 
+// 1. Read parameters from the active URL string context
 const urlParams = new URLSearchParams(window.location.search);
 let requestedAlbumId = parseInt(urlParams.get('album')); 
+
+// 2. Read the medium tab data type file name parameter string, defaulting to albums if missing
+let requestedFileType = urlParams.get('type') || 'albums.json'; 
 
 if (isNaN(requestedAlbumId)) {
     requestedAlbumId = 1; 
 }
 
-fetch('../albums.json') 
+// 3. Dynamic lookup that reads whichever file matches the active layout tab context stream
+fetch(`../${requestedFileType}`) 
     .then(response => {
-        if (!response.ok) throw new Error("Could not find the albums.json file!");
+        if (!response.ok) throw new Error(`Could not find the target storage database configuration file: ${requestedFileType}`);
         return response.json();
     })
     .then(albums => {
@@ -70,6 +76,7 @@ function updateSong(isInitialLoad = false) {
     if (!songs || songs.length === 0) return;
 
     const song = songs[currentSongIndex];
+    console.log("🎯 Currently loading track data:", song);
 
     const nameEl = document.getElementById("song-name") || document.getElementById("Song");
     const artistEl = document.getElementById("song-artist") || document.getElementById("Artist");

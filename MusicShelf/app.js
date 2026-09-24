@@ -1,16 +1,32 @@
 const shelf = document.getElementById('music-shelf');
 const sortSelect = document.getElementById('sort-select');
+
+// New Container & Button Selectors
+const playerContainer = document.getElementById('player-container');
 const playerFrame = document.getElementById('player-frame');
+const closePlayerBtn = document.getElementById('close-player-btn');
+
+// FIXED: Added the missing selector to target your tab layout buttons!
+const tabButtons = document.querySelectorAll('.tab-btn');
 
 let albumList = [];
+let currentActiveFile = 'albums.json'; 
 
-fetch('albums.json')
-  .then(response => response.json())
-  .then(data => {
-    albumList = data;        
-    renderShelf(albumList);  
-  })
-  .catch(err => console.error('Failed to load JSON file:', err));
+function loadMediaDatabase(fileName) {
+  currentActiveFile = fileName;
+  
+  fetch(fileName)
+    .then(response => response.json())
+    .then(data => {
+      albumList = data;
+      sortSelect.value = 'id'; 
+      renderShelf(albumList);
+    })
+    .catch(err => console.error('Error loading database:', err));
+}
+
+// Initial Boot
+loadMediaDatabase(currentActiveFile);
 
 function renderShelf(albums) {
   shelf.innerHTML = '';
@@ -27,8 +43,15 @@ function renderShelf(albums) {
     `;
 
     card.addEventListener('click', () => {
-      if (playerFrame) {
-        playerFrame.src = `Player/index.html?album=${album.id}`;
+      if (playerFrame && playerContainer) {
+        // 1. Load the requested song data parameters
+        playerFrame.src = `Player/index.html?album=${album.id}&type=${currentActiveFile}`;
+        
+        // 2. Reveal the entire player wrapper area smoothly
+        playerContainer.style.display = 'block'; 
+        
+        // Optional: Scroll down smoothly to the player so the user sees it open
+        playerContainer.scrollIntoView({ behavior: 'smooth' });
       }
     });
 
@@ -36,7 +59,38 @@ function renderShelf(albums) {
   });
 }
 
-// 3. The sort system event listener
+// THE CLOSE BUTTON EVENT LISTENER
+if (closePlayerBtn) {
+  closePlayerBtn.addEventListener('click', () => {
+    if (playerContainer && playerFrame) {
+      // 1. Hide the container layout from the viewport
+      playerContainer.style.display = 'none';
+      
+      // 2. CRITICAL: Wipe out the iframe's source link. 
+      // This kills the audio stream instantly so music doesn't keep ghost-playing in the background!
+      playerFrame.src = 'about:blank'; 
+    }
+  });
+}
+
+// 4. Tab click handler event logic loops
+if (tabButtons) {
+  tabButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      // Clean old active states out of tabs
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Highlight the clicked tab element
+      e.target.classList.add('active');
+      
+      // Read the file name target data parameter string and execute loader
+      const targetFile = e.target.getAttribute('data-file');
+      loadMediaDatabase(targetFile);
+    });
+  });
+}
+
+// 5. The sort system event listener
 sortSelect.addEventListener('change', (event) => {
   const sortBy = event.target.value;
   let sortedAlbums = [...albumList];

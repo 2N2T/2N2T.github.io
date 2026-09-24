@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Ama Tös",
+    "artist": "Tirno Zävi",
+    "year": 1987,
+    "coverUrl": "images/cover art/single/ama tos.png",
+    "rpm": "33",
+    "tracks": [
+      {
+        "trackNumber": 1,
+        "title": "Ama Tös",
+        "duration": "2:53",
+        "audioUrl": "audio/singles/Ama-tös.mp3"
+      }
+    ]
+  }
+]
