@@ -18,6 +18,11 @@ body {
 #song-name {
     margin-top: 20px;
     font-size: 2em;
+    color: white;
+}
+
+#song-artist {
+    color: white;
 }
 
 #music-buttons {
@@ -29,11 +34,9 @@ body {
 
 #music-buttons i {
     padding: 10px;
-    /* color: red; */
 }
 
 #slider-song {
-    /* accent-color: red; */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

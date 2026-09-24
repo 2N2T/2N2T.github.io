@@ -13,7 +13,6 @@
       padding: 20px;
     }
 
-    /* Controls Panel */
     .controls {
       display: flex;
       justify-content: center;
@@ -42,7 +41,6 @@
       margin: 0 auto;
     }
 
-    /* Individual Album Cards */
     .album-card {
       background: #1e1e1e;
       border: 1px solid #2d2d2d;
@@ -99,13 +97,11 @@
     transition: all 0.2s ease;
   }
 
-  /* Hover effect */
   .tab-btn:hover {
     background-color: #333333;
     border-color: #888888;
   }
 
-  /* The active/selected tab highlights orange */
   .tab-btn.active {
     background-color: #ff5500; 
     color: #ffffff;
@@ -114,16 +110,19 @@
   }
 
   .close-btn {
-  background-color: #ff3333;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background 0.2s;
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.2s;
   }
   
   .close-btn:hover {
@@ -170,14 +169,10 @@
 
   <div class="shelf-container" id="music-shelf"></div>
 
-  <!-- The Shelf Grid -->
   <div class="shelf-container" id="music-shelf"></div>
 
   <div id="player-container">
-    <!-- The Close Button -->
-    <button id="close-player-btn" class="close-btn">&times; Close Player</button>
-  
-    <!-- Your Iframe Player -->
+    <button id="close-player-btn" class="close-btn">x</button>
     <iframe id="player-frame" width="100%" height="100%" style="border: none;"></iframe>
   </div>
 
