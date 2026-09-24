@@ -48,7 +48,7 @@ function renderShelf(albums) {
         playerFrame.src = `Player/index.html?album=${album.id}&type=${currentActiveFile}`;
         
         // 2. Reveal the entire player wrapper area smoothly
-        playerContainer.style.display = 'block'; 
+        playerContainer.style.display = 'flex'; 
         
         // Optional: Scroll down smoothly to the player so the user sees it open
         playerContainer.scrollIntoView({ behavior: 'smooth' });

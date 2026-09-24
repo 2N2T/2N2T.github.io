@@ -3,43 +3,42 @@
     "id": 1,
     "title": "Appetite For Destruction",
     "artist": "Guns N' Roses",
-    "year": 1987,
     "coverUrl": "images/cover art/album/Appetite For Destruction.jpg",
-    "rpm": "33",
+    "vTextUrl": "images/vtext/album/Appetite For Destruction.jpg",
     "tracks": [
       {
         "trackNumber": 1,
         "title": "Welcome to the Jungle",
-        "duration": "4:33",
         "audioUrl": "audio/albums/Appetite For Destruction/Welcome To The Jungle.mp3"
       },
       {
         "trackNumber": 2,
-        "title": "Something",
-        "duration": "3:03",
-        "audioUrl": "audio/abbey-road/02-something.mp3"
+        "title": "It's so easy",
+        "audioUrl": "audio/albums/Appetite For Destruction/It's so easy.mp3"
       }
     ]
   },
   {
     "id": 2,
-    "title": "Helo babeh",
-    "artist": "Guns N' Roses",
+    "title": "Blood Rushing Like Current Through a Powerline",
+    "artist": "acloudyskye",
     "year": 1987,
-    "coverUrl": "Player/album-art1.jpg",
-    "rpm": "33",
+    "coverUrl": "images/cover art/album/Blood Rushing Like Current Through a Powerline.jpg",
     "tracks": [
       {
         "trackNumber": 1,
-        "title": "Welcome to the Jungle",
-        "duration": "4:33",
-        "audioUrl": "Player/PoPiPo.mp3"
+        "title": "Apologies",
+        "audioUrl": "audio/albums/Blood Rushing Like Current Through a Powerline/Apologies.mp3"
       },
       {
         "trackNumber": 2,
-        "title": "Something",
-        "duration": "3:03",
-        "audioUrl": "audio/abbey-road/02-something.mp3"
+        "title": "Off And Away",
+        "audioUrl": "audio/albums/Blood Rushing Like Current Through a Powerline/Off And Away.mp3"
+      },
+      {
+        "trackNumber": 3,
+        "title": "Downfall",
+        "audioUrl": "audio/albums/Blood Rushing Like Current Through a Powerline/Downfall.mp3"
       }
     ]
   }
