@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "Appetite For Destruction",
+    "artist": "Guns N' Roses",
+    "year": 1987,
+    "coverUrl": "images/cover art/album/Appetite For Destruction.jpg",
+    "rpm": "33",
+    "tracks": [
+      {
+        "trackNumber": 1,
+        "title": "Welcome to the Jungle",
+        "duration": "4:33",
+        "audioUrl": "audio/albums/Appetite For Destruction/Welcome To The Jungle.mp3"
+      },
+      {
+        "trackNumber": 2,
+        "title": "Something",
+        "duration": "3:03",
+        "audioUrl": "audio/abbey-road/02-something.mp3"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Helo babeh",
+    "artist": "Guns N' Roses",
+    "year": 1987,
+    "coverUrl": "Player/album-art1.jpg",
+    "rpm": "33",
+    "tracks": [
+      {
+        "trackNumber": 1,
+        "title": "Welcome to the Jungle",
+        "duration": "4:33",
+        "audioUrl": "Player/PoPiPo.mp3"
+      },
+      {
+        "trackNumber": 2,
+        "title": "Something",
+        "duration": "3:03",
+        "audioUrl": "audio/abbey-road/02-something.mp3"
+      }
+    ]
+  }
+]
