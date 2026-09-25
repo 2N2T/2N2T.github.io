@@ -1,31 +1,46 @@
 const shelf = document.getElementById('music-shelf');
 const sortSelect = document.getElementById('sort-select');
-
-// New Container & Button Selectors
 const playerContainer = document.getElementById('player-container');
 const playerFrame = document.getElementById('player-frame');
 const closePlayerBtn = document.getElementById('close-player-btn');
-
-// FIXED: Added the missing selector to target your tab layout buttons!
 const tabButtons = document.querySelectorAll('.tab-btn');
 
 let albumList = [];
-let currentActiveFile = 'albums.json'; 
+
+let currentActiveFile = localStorage.getItem('selectedTab') || 'albums.json';
+const savedSortOption = localStorage.getItem('selectedSort') || 'id';
+
+if (sortSelect) {
+  sortSelect.value = savedSortOption;
+}
+
+if (tabButtons) {
+  tabButtons.forEach(btn => {
+    if (btn.getAttribute('data-file') === currentActiveFile) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
 
 function loadMediaDatabase(fileName) {
   currentActiveFile = fileName;
+
+  localStorage.setItem('selectedTab', fileName);
   
-  fetch(fileName)
+  const cacheBusterUrl = `${fileName}?_=${new Date().getTime()}`;
+  
+  fetch(cacheBusterUrl)
     .then(response => response.json())
     .then(data => {
       albumList = data;
-      sortSelect.value = 'id'; 
-      renderShelf(albumList);
+      
+      applySortingAndRender();
     })
     .catch(err => console.error('Error loading database:', err));
 }
 
-// Initial Boot
 loadMediaDatabase(currentActiveFile);
 
 function renderShelf(albums) {
@@ -44,14 +59,8 @@ function renderShelf(albums) {
 
     card.addEventListener('click', () => {
       if (playerFrame && playerContainer) {
-        // 1. Load the requested song data parameters
         playerFrame.src = `Player/index.html?album=${album.id}&type=${currentActiveFile}`;
-        
-        // 2. Reveal the entire player wrapper area smoothly
         playerContainer.style.display = 'flex'; 
-        
-        // Optional: Scroll down smoothly to the player so the user sees it open
-        playerContainer.scrollIntoView({ behavior: 'smooth' });
       }
     });
 
@@ -59,47 +68,38 @@ function renderShelf(albums) {
   });
 }
 
-// THE CLOSE BUTTON EVENT LISTENER
 if (closePlayerBtn) {
   closePlayerBtn.addEventListener('click', () => {
     if (playerContainer && playerFrame) {
-      // 1. Hide the container layout from the viewport
       playerContainer.style.display = 'none';
-      
-      // 2. CRITICAL: Wipe out the iframe's source link. 
-      // This kills the audio stream instantly so music doesn't keep ghost-playing in the background!
       playerFrame.src = 'about:blank'; 
     }
   });
 }
 
-// 4. Tab click handler event logic loops
 if (tabButtons) {
   tabButtons.forEach(button => {
     button.addEventListener('click', (e) => {
-      // Clean old active states out of tabs
       tabButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // Highlight the clicked tab element
       e.target.classList.add('active');
       
-      // Read the file name target data parameter string and execute loader
       const targetFile = e.target.getAttribute('data-file');
       loadMediaDatabase(targetFile);
     });
   });
 }
 
-// 5. The sort system event listener
-sortSelect.addEventListener('change', (event) => {
-  const sortBy = event.target.value;
+function applySortingAndRender() {
+  const sortBy = sortSelect.value;
+  localStorage.setItem('selectedSort', sortBy);
+  
   let sortedAlbums = [...albumList];
-
   if (sortBy === 'artist') {
     sortedAlbums.sort((a, b) => a.artist.localeCompare(b.artist));
   } else if (sortBy === 'id') {
     sortedAlbums.sort((a, b) => a.id - b.id);
   }
-
   renderShelf(sortedAlbums);
-});
+}
+
+sortSelect.addEventListener('change', applySortingAndRender);

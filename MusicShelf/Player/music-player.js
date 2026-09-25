@@ -9,23 +9,40 @@ const vinylSpin = document.querySelector('#vinyl-spin');
 
 const audio = document.createElement("audio");
 
-// Dynamic runtime variables
+const volumeBtn = document.getElementById("volume-btn");
+const volumeSlider = document.getElementById("volume-slider");
+
+let savedVolume = localStorage.getItem('userVolume');
+let currentVolume = savedVolume !== null ? parseFloat(savedVolume) : 0.4;
+let lastVolume = currentVolume > 0 ? currentVolume : 0.4;
+
+audio.volume = currentVolume;
+if (volumeSlider) {
+    volumeSlider.value = currentVolume;
+}
+
+if (volumeBtn) {
+    if (currentVolume === 0) {
+        volumeBtn.className = "bi bi-volume-mute-fill";
+    } else if (currentVolume < 0.7) {
+        volumeBtn.className = "bi bi-volume-down-fill";
+    } else {
+        volumeBtn.className = "bi bi-volume-up-fill";
+    }
+}
+
 let songs = [];
 let currentSongIndex = 0;
 let albumArtistName = ""; 
 
-// 1. Read parameters from the active URL string context
 const urlParams = new URLSearchParams(window.location.search);
 let requestedAlbumId = parseInt(urlParams.get('album')); 
-
-// 2. Read the medium tab data type file name parameter string, defaulting to albums if missing
 let requestedFileType = urlParams.get('type') || 'albums.json'; 
 
 if (isNaN(requestedAlbumId)) {
     requestedAlbumId = 1; 
 }
 
-// 3. Dynamic lookup that reads whichever file matches the active layout tab context stream
 fetch(`../${requestedFileType}`) 
     .then(response => {
         if (!response.ok) throw new Error(`Could not find the target storage database configuration file: ${requestedFileType}`);
@@ -69,6 +86,52 @@ playpauseButton.addEventListener("click", function() {
     } else {
         audio.play().catch(err => console.log("Context initialized. Audio playing."));
         if (vinylSpin) vinylSpin.style.animationPlayState = 'running';
+    }
+});
+
+
+if (volumeSlider) {
+    volumeSlider.addEventListener("input", function() {
+        const volumeValue = parseFloat(volumeSlider.value);
+        audio.volume = volumeValue;
+        
+        localStorage.setItem('userVolume', volumeValue);
+
+        if (volumeValue === 0) {
+            volumeBtn.className = "bi bi-volume-mute-fill";
+        } else if (volumeValue < 0.7) {
+            volumeBtn.className = "bi bi-volume-down-fill";
+        } else {
+            volumeBtn.className = "bi bi-volume-up-fill";
+        }
+    });
+}
+
+if (volumeBtn) {
+    volumeBtn.addEventListener("click", function() {
+        if (audio.volume > 0) {
+            lastVolume = audio.volume;
+            audio.volume = 0;
+            volumeSlider.value = 0;
+            localStorage.setItem('userVolume', 0);
+            volumeBtn.className = "bi bi-volume-mute-fill";
+        } else {
+            audio.volume = lastVolume;
+            volumeSlider.value = lastVolume;
+            localStorage.setItem('userVolume', lastVolume);
+            volumeBtn.className = lastVolume < 0.7 ? "bi bi-volume-down-fill" : "bi bi-volume-up-fill";
+        }
+    });
+}
+
+
+audio.addEventListener("ended", function() {
+    if (currentSongIndex < songs.length - 1) {
+        currentSongIndex++;
+        updateSong();
+    } else {
+        currentSongIndex = 0;
+        updateSong(true); 
     }
 });
 
