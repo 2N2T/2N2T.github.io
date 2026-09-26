@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Music Shelf</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
     body {
       background-color: #121212;
@@ -79,84 +80,134 @@
     }
 
     .media-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-  }
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
 
-  .tab-btn {
-    background-color: #222222;
-    color: #ffffff;
-    border: 1px solid #444444;
-    padding: 10px 24px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+    .media-tabs-wrapper {
+      justify-content: center;
+      background-color: rgb(14, 12, 12);
+      border-radius: 20px;
+    }
 
-  .tab-btn:hover {
-    background-color: #333333;
-    border-color: #888888;
-  }
+    .tab-btn {
+      background-color: #222222;
+      color: #ffffff;
+      border: 1px solid #444444;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-  .tab-btn.active {
-    background-color: #ff5500; 
-    color: #ffffff;
-    border-color: #ff5500;
-    box-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
-  }
+    .tab-btn:hover {
+      background-color: #333333;
+      border-color: #888888;
+    }
 
-  .close-btn {
-    position: absolute;
-    right: 2%;
-    top: 2%;
-    background-color: #ff3333;
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background 0.2s;
-  }
-  
-  .close-btn:hover {
-    background-color: #cc0000;
-  }
+    .tab-btn.active {
+      background-color: #ff5500; 
+      color: #ffffff;
+      border-color: #ff5500;
+      box-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
+    }
 
-  #player-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999;
-    
-    height: 100vh;
-    width: 100%;
-    box-sizing: border-box;
+    .close-btn {
+      position: absolute;
+      right: 2%;
+      top: 2%;
+      background-color: #ff3333;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
 
-    display: none;
-    justify-content: center;
-    align-items: center;
+    .close-btn:hover {
+      background-color: #cc0000;
+    }
 
-    
-    background-color: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(3px);
-  }
+    .minimize-btn {
+      position: absolute;
+      right: 5%;
+      top: 2%;
+      background-color: rgb(84, 84, 209);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+
+    .minimize-btn:hover {
+      background-color: rgb(71, 71, 165);
+    }
+
+    #player-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99999;
+
+      height: 100vh;
+      width: 100%;
+      box-sizing: border-box;
+
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      gap: 16px;
+
+      background-color: rgba(0, 0, 0, 0.5); 
+      backdrop-filter: blur(3px);
+    }
+
+    #player-container[style*="display: none"] {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #player-container[style*="display: flex"] {
+      animation: smoothFadeIn 0.2s ease-out forwards;
+    }
 
 
+    @keyframes smoothFadeIn {
+      from {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="media-tabs">
-    <button class="tab-btn active" data-file="albums.json">Albums</button>
-    <button class="tab-btn" data-file="singles.json">Singles</button>
-    <button class="tab-btn" data-file="eps.json">EPs</button>
+    <div class="media-tabs-wrapper">
+      <button class="tab-btn active" data-file="albums.json">Albums</button>
+      <button class="tab-btn" data-file="singles.json">Singles</button>
+      <button class="tab-btn" data-file="eps.json">EPs</button>
+    </div>
   </div>
 
   <div class="controls">
@@ -169,10 +220,11 @@
 
   <div class="shelf-container" id="music-shelf"></div>
 
-  <div class="shelf-container" id="music-shelf"></div>
+  <!-- <div class="shelf-container" id="music-shelf"></div> -->
 
   <div id="player-container">
-    <button id="close-player-btn" class="close-btn">x</button>
+    <button id="close-player-btn" class="close-btn"><i class="bi bi-x-lg" style="-webkit-text-stroke: 1.5px currentColor;"></i></button>
+    <!-- <button id="minimize-player-btn" class="minimize-btn"><i class="bi bi-arrow-bar-left" style="-webkit-text-stroke: 1.5px currentColor;"></i></button> -->
     <iframe id="player-frame" width="100%" height="100%" style="border: none;"></iframe>
   </div>
 

@@ -6,6 +6,7 @@ const playpauseButton = document.getElementById("playpause-song");
 const prevSongButton = document.getElementById("prev-song");
 const nextSongButton = document.getElementById("next-song");
 const vinylSpin = document.querySelector('#vinyl-spin');
+const vinylInner = document.querySelector('#vinyl-inner');
 
 const audio = document.createElement("audio");
 
@@ -33,7 +34,8 @@ if (volumeBtn) {
 
 let songs = [];
 let currentSongIndex = 0;
-let albumArtistName = ""; 
+let albumArtistName = "";
+let currentVinylTextUrl = "";
 
 const urlParams = new URLSearchParams(window.location.search);
 let requestedAlbumId = parseInt(urlParams.get('album')); 
@@ -43,24 +45,35 @@ if (isNaN(requestedAlbumId)) {
     requestedAlbumId = 1; 
 }
 
+// FIXED: Cleaned up the duplicate .then() blocks and made it crash-proof
 fetch(`../${requestedFileType}`) 
     .then(response => {
         if (!response.ok) throw new Error(`Could not find the target storage database configuration file: ${requestedFileType}`);
         return response.json();
     })
     .then(albums => {
+        // Safety check to ensure the file returned valid data
+        if (!albums || !Array.isArray(albums) || albums.length === 0) {
+            throw new Error(`The file ${requestedFileType} returned empty or invalid data format.`);
+        }
+
         let currentAlbum = albums.find(a => a.id === requestedAlbumId);
         
+        // Fallback to the first album if the ID isn't found
         if (!currentAlbum) {
             currentAlbum = albums[0]; 
         }
 
         if (currentAlbum) {
-            albumArtistName = currentAlbum.artist;
-            songs = currentAlbum.tracks;
+            albumArtistName = currentAlbum.artist || "Unknown Artist";
+            songs = currentAlbum.tracks || [];
             currentSongIndex = 0;
+            
+            // Save the unique record sticker art globally here
+            currentVinylTextUrl = currentAlbum.vTextUrl || ""; 
 
             updateSong(true);
+            setInnerVinyl(); // Run it once at startup to set the initial vinyl face
         }
     })
     .catch(err => {
@@ -71,24 +84,27 @@ prevSongButton.addEventListener("click", function() {
     if (currentSongIndex == 0) return;
     currentSongIndex--;
     updateSong();
+    setInnerVinyl(); 
 });
 
 nextSongButton.addEventListener("click", function() {
     if (currentSongIndex == songs.length - 1) return;
     currentSongIndex++;
     updateSong();
+    setInnerVinyl(); 
 });
 
 playpauseButton.addEventListener("click", function() {
     if (!audio.paused) {
         audio.pause();
         if (vinylSpin) vinylSpin.style.animationPlayState = 'paused';
+        if (vinylInner) vinylInner.style.animationPlayState = 'paused';
     } else {
         audio.play().catch(err => console.log("Context initialized. Audio playing."));
         if (vinylSpin) vinylSpin.style.animationPlayState = 'running';
+        if (vinylInner) vinylInner.style.animationPlayState = 'running';
     }
 });
-
 
 if (volumeSlider) {
     volumeSlider.addEventListener("input", function() {
@@ -124,14 +140,15 @@ if (volumeBtn) {
     });
 }
 
-
 audio.addEventListener("ended", function() {
     if (currentSongIndex < songs.length - 1) {
         currentSongIndex++;
         updateSong();
+        setInnerVinyl(); 
     } else {
         currentSongIndex = 0;
         updateSong(true); 
+        setInnerVinyl();
     }
 });
 
@@ -159,9 +176,11 @@ function updateSong(isInitialLoad = false) {
     if (isInitialLoad) {
         audio.pause();
         if (vinylSpin) vinylSpin.style.animationPlayState = 'paused';
+        if (vinylInner) vinylInner.style.animationPlayState = 'paused';
     } else {
         audio.play().catch(err => console.warn("Autoplay block condition intercepted:", err));
         if (vinylSpin) vinylSpin.style.animationPlayState = 'running';
+        if (vinylInner) vinylInner.style.animationPlayState = 'running';
     }
 }
 
@@ -172,6 +191,12 @@ songSlider.addEventListener("change", function() {
 function moveSlider() {
     if (!audio.paused && audio.currentTime) {
         songSlider.value = audio.currentTime;
+    }
+}
+
+function setInnerVinyl() {
+    if (vinylInner && currentVinylTextUrl) {
+        vinylInner.src = `../${currentVinylTextUrl}`; 
     }
 }
 
